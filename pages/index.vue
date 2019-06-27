@@ -1,6 +1,44 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
+  <!-- <v-layout column justify-center align-center> -->
+  <v-layout row grid-list-md text-xs-center wrap>
+    <v-flex xs4>
+      <v-card dark color="secondary">
+        <v-avatar :tile="tile" size="200" color="grey lighten-4">
+          アバター
+          <img
+            src="https://vuetifyjs.com/apple-touch-icon-180x180.png"
+            alt="avatar"
+          />
+        </v-avatar>
+      </v-card>
+    </v-flex>
+    <v-flex xs8>
+      <v-card dark color="secondary">
+        <v-card-text class="px-0">基本情報</v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex xs3>
+      <v-card dark color="secondary">
+        <v-card-text class="px-0">GitHub</v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex xs3>
+      <v-card dark color="secondary">
+        <v-card-text class="px-0">Qiita</v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex xs3>
+      <v-card dark color="secondary">
+        <v-card-text class="px-0">SlidShare/speakerdeck</v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex xs3>
+      <v-card dark color="secondary">
+        <v-card-text class="px-0">Twitter</v-card-text>
+      </v-card>
+    </v-flex>
+
+    <!-- <v-flex xs12 sm8 md6>
       <div class="text-xs-center">
         <logo />
         <vuetify-logo />
@@ -53,7 +91,7 @@
           <v-btn color="primary" flat nuxt to="/inspire">Continue</v-btn>
         </v-card-actions>
       </v-card>
-    </v-flex>
+    </v-flex> -->
   </v-layout>
 </template>
 
@@ -65,6 +103,9 @@ export default {
   components: {
     Logo,
     VuetifyLogo
-  }
+  },
+  data: () => ({
+    tile: false
+  })
 }
 </script>
