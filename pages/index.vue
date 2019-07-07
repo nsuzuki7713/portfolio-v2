@@ -1,26 +1,27 @@
 <template>
   <!-- <v-layout column justify-center align-center> -->
-  <v-layout row grid-list-md text-xs-center wrap>
-    <v-flex xs4>
-      <v-card>
-        <v-avatar :tile="tile" size="200">
-          <img src="~/assets/icon.JPG" alt="avatar" />
-        </v-avatar>
-      </v-card>
-    </v-flex>
-    <v-flex xs8>
-      <v-card>
-        <v-card-text class="px-0">
-          <h2>
-            基本情報(<a @click="switchBasicInfoType(1)">JSON</a>/<a
-              @click="switchBasicInfoType(2)"
-              >CSV</a
-            >/<a @click="switchBasicInfoType(3)">YAML</a>/<a
-              @click="switchBasicInfoType(4)"
-              >Table</a
-            >)
-          </h2>
-          <pre v-if="basicInfoType !== 4">
+  <v-container grid-list-md text-xs-center>
+    <v-layout row grid-list-md text-xs-center wrap>
+      <v-flex xs4>
+        <v-card>
+          <v-avatar :tile="tile" size="200">
+            <img src="~/assets/icon.JPG" alt="avatar" />
+          </v-avatar>
+        </v-card>
+      </v-flex>
+      <v-flex xs8>
+        <v-card>
+          <v-card-text class="px-0">
+            <h2>
+              基本情報(<a @click="switchBasicInfoType(1)">JSON</a>/<a
+                @click="switchBasicInfoType(2)"
+                >CSV</a
+              >/<a @click="switchBasicInfoType(3)">YAML</a>/<a
+                @click="switchBasicInfoType(4)"
+                >Table</a
+              >)
+            </h2>
+            <pre v-if="basicInfoType !== 4">
             <code class="text-sm-left" style="font-size:14px;width: 80%;background: white;" v-if="basicInfoType===1">
               body { 
                     名前: "なおと",
@@ -43,115 +44,184 @@
                   区分: "個人事業主"
             </code>
           </pre>
-          <div
-            style="font-size:14px;width: 80%;background: white;margin:0 auto;"
-            v-if="basicInfoType === 4"
-          >
-            <v-data-table :headers="headers" :items="desserts" hide-actions>
-              <template v-slot:items="props">
-                <td class="text-xs-left">{{ props.item.key }}</td>
-                <td class="text-xs-left">{{ props.item.value }}</td>
-              </template>
-            </v-data-table>
-          </div>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs3>
-      <v-card dark color="secondary">
-        <v-card-text class="px-0">
-          <div>GitHub</div>
-          <div>contributions:700</div>
-          <div>直近一週間:700</div>
-          <div>{{ items.results_returned }}</div>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs3>
-      <v-card dark color="secondary">
-        <v-card-text class="px-0">Qiita</v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs3>
-      <v-card dark color="secondary">
-        <v-card-text class="px-0">SlidShare/speakerdeck</v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs3>
-      <v-card dark color="secondary">
-        <v-card-text class="px-0">Twitter</v-card-text>
-      </v-card>
-    </v-flex>
+            <div
+              style="font-size:14px;width: 80%;background: white;margin:0 auto;"
+              v-if="basicInfoType === 4"
+            >
+              <v-data-table :headers="headers" :items="desserts" hide-actions>
+                <template v-slot:items="props">
+                  <td class="text-xs-left">{{ props.item.key }}</td>
+                  <td class="text-xs-left">{{ props.item.value }}</td>
+                </template>
+              </v-data-table>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-    <!-- <v-flex xs12 sm8 md6>
-      <div class="text-xs-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline"
-          >Welcome to the Vuetify + Nuxt.js template</v-card-title
-        >
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank">documentation</a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat"
-              >discord</a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-              >issue board</a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">Nuxt Documentation</a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank"
-            >Nuxt GitHub</a
-          >
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" flat nuxt to="/inspire">Continue</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex> -->
-  </v-layout>
+      <v-flex xs3>
+        <v-card style="height:370px">
+          <img src="~/assets/GitHub-Mark-120px-plus.png" aspect-ratio="2.75" />
+          <v-card-text class="px-1">
+            <div>
+              <div style="font-size: 24px;">contributions</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="32"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">直近1週間</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="700"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">昨日</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="2"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs3>
+        <v-card style="height:370px">
+          <img src="~/assets/qiita-rectangle.png" height="120px;" />
+          <v-card-text class="px-0">
+            <div>
+              <div style="font-size: 24px;">投稿数</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="55"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">contribution</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="1915"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div style="display:none">
+              <div style="font-size: 24px;">contribution</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="1915"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs3>
+        <v-card style="height:370px">
+          <img
+            src="~/assets/Twitter_Social_Icon_Circle_Color.png"
+            height="120px;"
+          />
+          <v-card-text class="px-0">
+            <div>
+              <div style="font-size: 24px;">ツイート</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="3803"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">フォロー</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="766"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">フォロワー</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="843"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs3>
+        <v-card style="height:370px">
+          <img src="~/assets/connpass_logo_3.png" height="120px;" />
+          <v-card-text class="px-0">
+            <div>
+              <div style="font-size: 24px;">参加</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="38"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 24px;">直近1ヶ月</div>
+              <div style="font-size: 24px;">
+                <animated-number
+                  :value="2"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import AnimatedNumber from 'animated-number-vue'
 
 export default {
   components: {
     Logo,
-    VuetifyLogo
+    VuetifyLogo,
+    AnimatedNumber
   },
   data: () => ({
     tile: false,
     basicInfoType: 1,
+    value: 1900,
     headers: [
       { text: 'key', value: 'key', sortable: false },
       { text: 'value', value: 'value', sortable: false }
@@ -186,6 +256,9 @@ export default {
   methods: {
     switchBasicInfoType(type) {
       this.basicInfoType = type
+    },
+    formatToPrice(value) {
+      return `${value.toFixed(0)}`
     }
   }
 }
