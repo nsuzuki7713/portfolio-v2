@@ -60,19 +60,19 @@
             <div>
               <div style="font-size: 24px;">contributions</div>
               <div style="font-size: 24px;">
-                <animated-number :value="32" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="contributionsObj.total" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">直近1週間</div>
               <div style="font-size: 24px;">
-                <animated-number :value="700" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="contributionsObj.week" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">昨日</div>
               <div style="font-size: 24px;">
-                <animated-number :value="2" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="contributionsObj.yesterday" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
           </v-card-text>
@@ -86,19 +86,13 @@
             <div>
               <div style="font-size: 24px;">投稿数</div>
               <div style="font-size: 24px;">
-                <animated-number :value="55" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="qiitaObj.itemCount" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">contribution</div>
               <div style="font-size: 24px;">
-                <animated-number :value="1915" :formatValue="formatToPrice" :duration="2000" />
-              </div>
-            </div>
-            <div style="display:none">
-              <div style="font-size: 24px;">contribution</div>
-              <div style="font-size: 24px;">
-                <animated-number :value="1915" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="qiitaObj.contribution" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
           </v-card-text>
@@ -112,19 +106,19 @@
             <div>
               <div style="font-size: 24px;">ツイート</div>
               <div style="font-size: 24px;">
-                <animated-number :value="3803" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="twitterObj.tweet" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">フォロー</div>
               <div style="font-size: 24px;">
-                <animated-number :value="766" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="twitterObj.following" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">フォロワー</div>
               <div style="font-size: 24px;">
-                <animated-number :value="843" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="twitterObj.followers" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
           </v-card-text>
@@ -138,13 +132,17 @@
             <div>
               <div style="font-size: 24px;">参加</div>
               <div style="font-size: 24px;">
-                <animated-number :value="38" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number :value="connpassObj.participation" :formatValue="formatToPrice" :duration="2000" />
               </div>
             </div>
             <div>
               <div style="font-size: 24px;">直近1ヶ月</div>
               <div style="font-size: 24px;">
-                <animated-number :value="2" :formatValue="formatToPrice" :duration="2000" />
+                <animated-number
+                  :value="connpassObj.participationMonth"
+                  :formatValue="formatToPrice"
+                  :duration="2000"
+                />
               </div>
             </div>
           </v-card-text>
@@ -291,7 +289,7 @@ export default {
     const urlPairs = [
       ['https://qiita.com/turmericN', createQiitaObject],
       ['https://twitter.com/naoto_7713', createTwitterObject],
-      ['https://github.com/users/nsuzuki7713/contributions', createTwitterObject],
+      ['https://github.com/users/nsuzuki7713/contributions', createGitHubContributionsObject],
       ['https://connpass.com/user/s_naoto/', createConnpassObject]
     ]
 
@@ -337,6 +335,7 @@ function createTwitterObject(html) {
     .eq(0)
     .text()
     .replace(/\r?\n/g, '')
+    .replace(',', '')
 
   twitter.following = $('.ProfileNav-value')
     .eq(1)
