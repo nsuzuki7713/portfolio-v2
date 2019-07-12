@@ -42,7 +42,7 @@
             </code>
           </pre>
             <div style="font-size:14px;width: 80%;background: white;margin:0 auto;" v-if="basicInfoType === 4">
-              <v-data-table :headers="headers" :items="desserts" hide-actions>
+              <v-data-table :headers="headers" :items="gitHubObj.basicInfo" hide-actions>
                 <template v-slot:items="props">
                   <td class="text-xs-left">{{ props.item.key }}</td>
                   <td class="text-xs-left">{{ props.item.value }}</td>
@@ -188,26 +188,7 @@
       <h1>githubから取得する職務経歴書など</h1>
       {{ gitHubCv }}
     </v-card> -->
-    <!-- <v-card>
-      <h1>Qiita情報</h1>
-      {{ qiita }}
-    </v-card> -->
-    <!-- <v-card>
-      <h1>twtter</h1>
-      {{ twtter }}
-    </v-card> -->
-    <!-- <v-card>
-      <h1>githubCnt</h1>
-      {{ githubCnt }}
-    </v-card> -->
-    <!-- <v-card>
-      <h1>connpass</h1>
-      {{ connpass }}
-    </v-card> -->
-    {{ qiitaObj }}
-    {{ twitterObj }}
-    {{ contributionsObj }}
-    {{ connpassObj }}
+    {{ gitHubObj }}
   </v-container>
 </template>
 
@@ -228,75 +209,22 @@ export default {
     basicInfoType: 1,
     value: 1900,
     headers: [{ text: 'key', value: 'key', sortable: false }, { text: 'value', value: 'value', sortable: false }],
-    desserts: [
-      {
-        key: '名前',
-        value: 'なおと'
-      },
-      {
-        key: '性別',
-        value: '男性'
-      },
-      {
-        key: '生年月日',
-        value: 1993
-      },
-      {
-        key: '生息地',
-        value: '東京'
-      },
-      {
-        key: '区分',
-        value: '個人事業主'
-      }
-    ],
     panel: [],
     cvItems: 5
   }),
   async asyncData({ app }) {
-    // const gitHubCv = await app.$axios.$get(
-    //   'https://github.com/nsuzuki7713/cv/blob/master/README.md'
-    // )
-    // const $ = cheerio.load(gitHubCv)
-    // console.log(
-    //   $('tbody tr td')
-    //     .eq(0)
-    //     .text() +
-    //     $('tbody tr td')
-    //       .eq(1)
-    //       .text()
-    // )
-
-    // const results = []
-    // const urls = [
-    //   'https://qiita.com/turmericN',
-    //   'https://twitter.com/naoto_7713',
-    //   'https://github.com/users/nsuzuki7713/contributions',
-    //   'https://connpass.com/user/s_naoto/'
-    // ]
-    // for (const url of urls) {
-    //   results.push(app.$axios.$get(url))
-    // }
-    // return Promise.all(results).then(results => {
-    //   const qiitaObj = createQiitaObject(results[0])
-    //   const twitterObj = createTwitterObject(results[1])
-    //   const contributionsObj = createGitHubContributionsObject(results[2])
-    //   const connpassObj = createConnpassObject(results[3])
-
-    //   return { qiitaObj, twitterObj, contributionsObj, connpassObj }
-    // })
-
     const urlPairs = [
       ['https://qiita.com/turmericN', createQiitaObject],
       ['https://twitter.com/naoto_7713', createTwitterObject],
       ['https://github.com/users/nsuzuki7713/contributions', createGitHubContributionsObject],
-      ['https://connpass.com/user/s_naoto/', createConnpassObject]
+      ['https://connpass.com/user/s_naoto/', createConnpassObject],
+      ['https://github.com/nsuzuki7713/cv/blob/master/README.md', createGithubCvObject]
     ]
 
     const cb = ([url, convert]) => app.$axios.$get(url).then(convert)
-    const [qiitaObj, twitterObj, contributionsObj, connpassObj] = await Promise.all(urlPairs.map(cb))
+    const [qiitaObj, twitterObj, contributionsObj, connpassObj, gitHubObj] = await Promise.all(urlPairs.map(cb))
 
-    return { qiitaObj, twitterObj, contributionsObj, connpassObj }
+    return { qiitaObj, twitterObj, contributionsObj, connpassObj, gitHubObj }
   },
   methods: {
     switchBasicInfoType(type) {
@@ -410,5 +338,22 @@ function createConnpassObject(html) {
   connpass.participationMonth = participationMonth
 
   return connpass
+}
+
+function createGithubCvObject(html) {
+  const $ = cheerio.load(html)
+  const cv = {}
+
+  let basicInfo = []
+  $('tbody tr').each((i, elem) => {
+    const targetTd = $(elem).find('td')
+    const obj = {}
+    obj.key = targetTd.eq(0).text()
+    obj.value = targetTd.eq(1).text()
+    basicInfo.push(obj)
+  })
+
+  cv.basicInfo = basicInfo
+  return cv
 }
 </script>
