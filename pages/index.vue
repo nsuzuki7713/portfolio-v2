@@ -160,22 +160,22 @@
           </div>
 
           <v-expansion-panel v-model="panel" expand>
-            <v-expansion-panel-content v-for="(cvItems, i) in cvItems" :key="i">
+            <v-expansion-panel-content v-for="(item, i) in gitHubObj.careerInfo" :key="i">
               <template v-slot:header>
                 <div style="font-size:16px;">
-                  サーバレスで大量データ集積の開発【Vue/Node.js/TypeScript/AWS】(2019年:現在)
+                  {{ item.key }}
                 </div>
               </template>
               <v-card>
                 <v-card-text>
-                  <h3>【プロジェクト概要】</h3>
-                  <p>
-                    サーバレス環境で大量データを集積するプロジェクトです。現在は主にVueでフロントの開発を行っています。
-                  </p>
-                  <h3>【担当業務】</h3>
-                  <p>
-                    Vueで業務系のWebシステム開発(新規)。使用言語はVue、TypeScript。
-                  </p>
+                  <h3>言語</h3>
+                  <p>{{ item.language }}</p>
+                  <div v-for="(str, i) in item.value" :key="i">
+                    <h3>{{ getCvTitle(str) }}</h3>
+                    <p>
+                      {{ getCvContent(str) }}
+                    </p>
+                  </div>
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
@@ -188,7 +188,7 @@
       <h1>githubから取得する職務経歴書など</h1>
       {{ gitHubCv }}
     </v-card> -->
-    {{ gitHubObj }}
+    <!-- {{ gitHubObj.careerInfo }} -->
   </v-container>
 </template>
 
@@ -239,6 +239,30 @@ export default {
     // Reset the panel
     none() {
       this.panel = []
+    },
+    getCvTitle(str) {
+      console.log(str)
+      // const result = str.match(/【.*】/)
+      // result[0].replace(/【|】/g, '');
+
+      return str.substring(str.indexOf('【') + 1, str.indexOf('】'))
+    },
+    getCvContent(str) {
+      console.log(str)
+      // 書き方１
+      // const result = str.match(/【.*】/)
+      // result[0].replace(/【|】/g, '');
+
+      // 書き方２
+      // const str = '【プロジェクト概要】〇〇です。';
+      // console.log(str.replace(/【(.*)】.*/, '$1'));
+
+      // 書き方３
+      // var str = '【プロジェクト概要】〇〇です。'
+      // var result = str.match(/【(.*)】/)
+      // console.log(result && result[1])
+
+      return str.substring(str.indexOf('】') + 1, str.length)
     }
   }
 }
@@ -345,15 +369,35 @@ function createGithubCvObject(html) {
   const cv = {}
 
   let basicInfo = []
-  $('tbody tr').each((i, elem) => {
-    const targetTd = $(elem).find('td')
-    const obj = {}
-    obj.key = targetTd.eq(0).text()
-    obj.value = targetTd.eq(1).text()
-    basicInfo.push(obj)
-  })
+  $('tbody')
+    .eq(0)
+    .find('tr')
+    .each((i, elem) => {
+      const targetTd = $(elem).find('td')
+      const obj = {}
+      obj.key = targetTd.eq(0).text()
+      obj.value = targetTd.eq(1).text()
+      basicInfo.push(obj)
+    })
+
+  let careerInfo = []
+  $('tbody')
+    .eq(1)
+    .find('tr')
+    .each((i, elem) => {
+      const targetTd = $(elem).find('td')
+      const obj = {}
+      obj.key = targetTd.eq(0).text()
+      obj.language = targetTd.eq(1).text()
+      obj.value = targetTd
+        .eq(2)
+        .text()
+        .split(' ')
+      careerInfo.push(obj)
+    })
 
   cv.basicInfo = basicInfo
+  cv.careerInfo = careerInfo
   return cv
 }
 </script>
