@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/vuetify": "0.5.5",
+    "@nuxtjs/vuetify": "1.10.1",
     "animated-number-vue": "^1.0.0",
     "cheerio": "^1.0.0-rc.3",
     "nuxt": "^2.0.0"
