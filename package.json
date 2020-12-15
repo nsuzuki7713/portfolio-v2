@@ -11,7 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.12.4",
     "@nuxtjs/vuetify": "0.5.5",
     "animated-number-vue": "^1.0.0",
     "cheerio": "^1.0.0-rc.3",
