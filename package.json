@@ -15,7 +15,7 @@
     "@nuxtjs/vuetify": "0.5.5",
     "animated-number-vue": "^1.0.0",
     "cheerio": "^1.0.0-rc.3",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.15.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.1.0",
